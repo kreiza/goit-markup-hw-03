@@ -1,5 +1,5 @@
 /* ===================== */
-/* Core + Reset (A8, B1) */
+/* Core + Reset          */
 /* ===================== */
 :root {
     --iris: #4d5ae5;
@@ -10,33 +10,40 @@
     --cornflower: #e7e9fc;
     --gap: 24px;
     --row-gap: 48px;
-    --container-w: 1158px; /* B8 */
+    --container-w: 1158px;
 }
 
 *,
 *::before,
-*::after {
-    box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 body {
     font-family: "Roboto", sans-serif;
     color: var(--slate);
     background-color: var(--white);
-    margin: 0; /* B2 */
+    margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p { margin: 0; }     /* B1 */
-ul { list-style: none; margin: 0; padding-left: 0; } /* B1 */
+h1, h2, h3, h4, h5, h6, p { margin: 0; }
+ul { list-style: none; margin: 0; padding-left: 0; }
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; }
+img { display: block; max-width: 100%; height: auto; }
 
-img { display: block; max-width: 100%; height: auto; } /* обов'язково блочні */
+/* Паттерн приховування заголовків (вимога: .visually-hidden) */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    margin: -1px; border: 0; padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%); clip: rect(0 0 0 0);
+    overflow: hidden;
+}
 
 /* ===================== */
-/* Layout primitives     */
+/* Layout                */
 /* ===================== */
-.container {                           /* B6, B8, B9 */
+.container {
     max-width: var(--container-w);
     padding-left: 15px;
     padding-right: 15px;
@@ -44,22 +51,26 @@ img { display: block; max-width: 100%; height: auto; } /* обов'язково 
     margin-right: auto;
 }
 
-.section {                             /* B14, B15 */
-    padding-top: 120px;
-    padding-bottom: 120px;
-}
+.section { padding-top: 120px; padding-bottom: 120px; } /* базово */
+.hero.section { padding: 188px 0; } /* вимога: 188px 0 для секції hero */
 
 /* ===================== */
-/* Header (B10, B13)     */
+/* Header                */
 /* ===================== */
-.header { border-bottom: 1px solid var(--cornflower); } /* ледве помітна лінія */
+.header { border-bottom: 1px solid var(--cornflower); }
 
 .header-inner {
     display: flex;
     align-items: center;
-    gap: 40px;
 }
 
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0; /* відступ від логотипа робимо margin-right на .logo */
+}
+
+/* Лого (вимога: margin-right: 76px) */
 .logo {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
@@ -67,58 +78,56 @@ img { display: block; max-width: 100%; height: auto; } /* обов'язково 
     line-height: 1.17;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: var(--iris);
+    color: #4d5ae5;
+    margin-right: 76px; /* ✔ */
 }
-.logo-accent { color: var(--navy); }
+.logo-accent { color: #2e2f42; }
 
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.menu { display: flex; gap: 40px; }            /* B10 */
+.menu { display: flex; gap: 40px; }
 
 .menu-link {
     font-weight: 500;
     line-height: 1.5;
     letter-spacing: 0.02em;
-    color: var(--navy);
-    padding: 24px 0;                              /* висота хедера формується паддінгами */
+    color: #2e2f42;
+    padding: 24px 0; /* висота хедера формується паддінгами */
 }
 .menu-link:hover,
 .menu-link:focus { color: #404bbf; }
 
-.contacts { margin-left: auto; font-style: normal; } /* відштовхуємо вправо */
-.contacts-list { display: flex; gap: 40px; }          /* B10 */
-.contacts-link {
-    line-height: 1.5;
-    letter-spacing: 0.02em;
-    color: var(--slate);
-}
+/* Контакти */
+.contacts { margin-left: auto; font-style: normal; }
+.contacts-list { display: flex; gap: 40px; }
+.contacts-link { line-height: 1.5; letter-spacing: 0.02em; color: #434455; }
 .contacts-link:hover,
 .contacts-link:focus { color: #404bbf; }
 
 /* ===================== */
 /* Hero                  */
 /* ===================== */
-.hero { background-color: var(--navy); text-align: center; }
+.hero { background-color: #2e2f42; text-align: center; }
 .hero .container { display: grid; justify-items: center; row-gap: 48px; }
 
 .hero-title {
     font-size: 56px;
     line-height: 1.07;
+    text-align: center;
+    color: #ffffff;
     letter-spacing: 0.02em;
-    color: var(--white);
+    max-width: 496px;       /* ✔ вимога */
+    margin-left: auto;
+    margin-right: auto;
 }
+
 .hero-btn {
     font-weight: 500;
     line-height: 1.5;
     letter-spacing: 0.04em;
-    background-color: var(--iris);
-    color: var(--white);
+    background-color: #4d5ae5;
+    color: #ffffff;
     border: none;
     padding: 16px 32px;
+    min-width: 169px;       /* ✔ вимога */
     border-radius: 4px;
 }
 .hero-btn:hover,
@@ -133,95 +142,74 @@ img { display: block; max-width: 100%; height: auto; } /* обов'язково 
     letter-spacing: 0.02em;
     text-transform: capitalize;
     text-align: center;
-    color: var(--navy);
-    margin-bottom: 72px; /* B3 */
+    color: #2e2f42;
+    margin-bottom: 72px;
 }
 
 /* ===================== */
-/* Features (4 в ряд)    */
+/* Features              */
 /* ===================== */
-.features-list { display: flex; gap: var(--gap); }           /* B10 */
-.feature-item { width: calc((100% - 3 * var(--gap)) / 4); }  /* calc() */
-
+.features-list { display: flex; gap: var(--gap); }
+.feature-item { width: calc((100% - 3 * var(--gap)) / 4); }
 .feature-title {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    color: var(--navy);
-    margin-bottom: 8px;
+    font-weight: 500; font-size: 20px; line-height: 1.2;
+    letter-spacing: 0.02em; color: #2e2f42; margin-bottom: 8px;
 }
 .feature-text { line-height: 1.5; letter-spacing: 0.02em; }
 
 /* ===================== */
-/* Team (4 картки)       */
+/* Team                  */
 /* ===================== */
-.team { background-color: var(--cloud); }
-.team-list { display: flex; gap: var(--gap); }               /* B10 */
+.team { background-color: #f4f4fd; }
+.team-list { display: flex; gap: var(--gap); }
+
 .team-item {
-    background-color: var(--white);
+    background-color: #ffffff;
     width: calc((100% - 3 * var(--gap)) / 4);
     border-radius: 4px;
     box-shadow: 0 1px 6px rgba(0,0,0,.08);
 }
-.team-meta { padding: 32px 16px; text-align: center; }      /* B4 */
+
+/* вимога: перший елемент списку з заокругленням лише знизу */
+.team-item:first-child { border-radius: 0 0 4px 4px; } /* ✔ */
+
+.team-meta { padding: 32px 0; text-align: center; } /* ✔ вимога: padding: 32px 0 */
 .team-name {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    color: var(--navy);
-    margin-bottom: 8px;
+    font-weight: 500; font-size: 20px; line-height: 1.2;
+    letter-spacing: 0.02em; color: #2e2f42; margin-bottom: 8px;
 }
 .team-role { font-size: 16px; line-height: 1.5; letter-spacing: 0.02em; }
 
 /* ===================== */
-/* Portfolio (3 в ряд)   */
+/* Portfolio             */
 /* ===================== */
-.portfolio-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
-    row-gap: var(--row-gap);
-}
-.portfolio-item {
-    width: calc((100% - 2 * var(--gap)) / 3);
-    background-color: var(--white);
-}
+.portfolio-list { display: flex; flex-wrap: wrap; gap: var(--gap); row-gap: var(--row-gap); }
+.portfolio-item { width: calc((100% - 2 * var(--gap)) / 3); background-color: #ffffff; }
+
+/* рамка лише знизу + заокруглення у першого елемента (на всяк випадок теж) */
 .card-box {
-    border: 1px solid var(--cornflower);  /* B16: рамка лише знизу */
+    border: 1px solid #e7e9fc;
     border-top: none;
-    padding: 32px 16px;                   /* B4 */
+    padding: 32px 0; /* ✔ вимога: padding: 32px 0 */
 }
+.portfolio-item:first-child .card-box { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; } /* ✔ */
+
 .card-title {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    color: var(--navy);
-    margin-bottom: 8px;                   /* B3 */
+    font-weight: 500; font-size: 20px; line-height: 1.2;
+    letter-spacing: 0.02em; color: #2e2f42; margin-bottom: 8px;
 }
 .card-text { font-size: 16px; line-height: 1.5; letter-spacing: 0.02em; }
 
 /* ===================== */
 /* Footer                */
 /* ===================== */
-.site-footer {
-    background-color: var(--navy);
-    color: var(--cloud);
-    padding-top: 100px;
-    padding-bottom: 100px;
-}
+.site-footer { background-color: #2e2f42; color: #f4f4fd; padding: 100px 0; }
 .footer-logo {
     display: inline-block;
     font-family: "Raleway", sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.17;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--iris);
-    margin-bottom: 16px;
+    font-weight: 700; font-size: 18px; line-height: 1.17;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    color: #4d5ae5; margin-bottom: 16px;
 }
-.footer-logo-accent { color: var(--cloud); }
-.footer-text { line-height: 1.5; letter-spacing: 0.02em; color: var(--cloud); max-width: 264px; }
+.footer-logo-accent { color: #f4f4fd; }
+.footer-text { line-height: 1.5; letter-spacing: 0.02em; color: #f4f4fd; max-width: 264px; }
